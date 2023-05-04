@@ -1,6 +1,9 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control" :class="{invalid: userNameValidity === 'invalid'}">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameValidity === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
       <input
         id="user-name"
@@ -104,13 +107,23 @@
       />
       <label for="confirm-terms">Agree to terms</label>
     </div>
+    <div class="form-control">
+      <!-- under the hood it use :model-value and @update:model-value which translate to :v-model -->
+      <!-- this is similar to v-model === @input="" :value="" which is to fetch value via property -->
+      <rating-control v-model="rating"></rating-control>
+    </div>
     <div>
       <button>Save Data</button>
     </div>
   </form>
 </template>
 <script>
+import RatingControl from './RatingControl.vue';
+
 export default {
+  components: {
+    RatingControl,
+  },
   data() {
     return {
       userName: '',
@@ -120,6 +133,7 @@ export default {
       how: null,
       confirm: false,
       userNameValidity: 'pending',
+      rating: false,
     };
   },
   methods: {
@@ -136,6 +150,9 @@ export default {
       console.log('how: ' + this.how);
       // single check box without value give true or false
       console.log('confirm: ' + this.confirm);
+      console.log('Rating');
+      console.log(this.rating);
+      this.rating = null;
     },
     validateInput() {
       if (this.userName === '') {
@@ -161,13 +178,12 @@ form {
 .form-control {
   margin: 0.5rem 0;
 }
-.form-control.invalid input{
+.form-control.invalid input {
   border-color: red;
 }
-.form-control.invalid label{
+.form-control.invalid label {
   color: red;
 }
-
 
 label {
   font-weight: bold;
