@@ -1,12 +1,23 @@
 <template>
   <ul>
-    <li :class="{ active: activeOption === 'poor' }">
+    <!-- option one use local variable -->
+    <!-- <li :class="{ active: activeOption === 'poor' }">
       <button type="button" @click="activate('poor')">Poor</button>
     </li>
     <li :class="{ active: activeOption === 'average' }">
       <button type="button" @click="activate('average')">Average</button>
     </li>
     <li :class="{ active: activeOption === 'great' }">
+      <button type="button" @click="activate('great')">Great</button>
+    </li> -->
+    <!-- this is option 2 use the same prop that you get from parent -->
+    <li :class="{ active: modelValue === 'poor' }">
+      <button type="button" @click="activate('poor')">Poor</button>
+    </li>
+    <li :class="{ active: modelValue === 'average' }">
+      <button type="button" @click="activate('average')">Average</button>
+    </li>
+    <li :class="{ active: modelValue === 'great' }">
       <button type="button" @click="activate('great')">Great</button>
     </li>
   </ul>
@@ -23,14 +34,14 @@ export default {
   //       activeOption: this.modelValue,
   //     };
   //   },
-  computed: {
-    activeOption(){
-        return this.modelValue;
-    }
-  },
+//   computed: {
+//     activeOption(){
+//         return this.modelValue;
+//     }
+//   },
   methods: {
     activate(option) {
-      this.activeOption = option;
+    //   this.activeOption = option;
       this.$emit('update:modelValue', option);
     },
   },
