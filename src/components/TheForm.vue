@@ -1,12 +1,25 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div class="form-control" :class="{invalid: userNameValidity === 'invalid'}">
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" v-model="userName" />
+      <input
+        id="user-name"
+        name="user-name"
+        type="text"
+        v-model.trim="userName"
+        @blur="validateInput"
+      />
+      <p v-if="userNameValidity !== 'pending'">{{ userNameValidity }}</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
-      <input id="age" name="age" type="number" v-model="userAge" ref="ageInput"/>
+      <input
+        id="age"
+        name="age"
+        type="number"
+        v-model="userAge"
+        ref="ageInput"
+      />
     </div>
     <div class="form-control">
       <label for="referrer">How did you hear about us?</label>
@@ -19,36 +32,77 @@
     <div class="form-control">
       <h2>What are you interested in?</h2>
       <div>
-        <input id="interest-news" name="interest" type="checkbox" value="news" v-model="interest"/>
+        <input
+          id="interest-news"
+          name="interest"
+          type="checkbox"
+          value="news"
+          v-model="interest"
+        />
         <label for="interest-news">News</label>
       </div>
       <div>
-        <input id="interest-tutorials" name="interest" type="checkbox" value="tutorials" v-model="interest"/>
+        <input
+          id="interest-tutorials"
+          name="interest"
+          type="checkbox"
+          value="tutorials"
+          v-model="interest"
+        />
         <label for="interest-tutorials">Tutorials</label>
       </div>
       <div>
-        <input id="interest-nothing" name="interest" type="checkbox" value="nothing" v-model="interest"/>
+        <input
+          id="interest-nothing"
+          name="interest"
+          type="checkbox"
+          value="nothing"
+          v-model="interest"
+        />
         <label for="interest-nothing">Nothing</label>
       </div>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" value="video" v-model="how"/>
+        <input
+          id="how-video"
+          name="how"
+          type="radio"
+          value="video"
+          v-model="how"
+        />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" type="radio" value="blogs" v-model="how"/>
+        <input
+          id="how-blogs"
+          name="how"
+          type="radio"
+          value="blogs"
+          v-model="how"
+        />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" value="others" v-model="how"/>
+        <input
+          id="how-other"
+          name="how"
+          type="radio"
+          value="others"
+          v-model="how"
+        />
         <label for="how-other">Other</label>
       </div>
     </div>
     <div class="form-control">
-      <input type="checkbox" id="confirm-terms" name="confirm-terms" v-model="confirm">
-      <label for="confirm-terms" >Agree to terms</label>
+      <input
+        type="checkbox"
+        id="confirm-terms"
+        name="confirm-terms"
+        v-model="confirm"
+      />
+      <label for="confirm-terms">Agree to terms</label>
     </div>
     <div>
       <button>Save Data</button>
@@ -61,26 +115,34 @@ export default {
     return {
       userName: '',
       userAge: null,
-      referrer: '',// drop down need a def
-      interest: [],//need to default array
+      referrer: '', // drop down need a def
+      interest: [], //need to default array
       how: null,
       confirm: false,
+      userNameValidity: 'pending',
     };
   },
   methods: {
     submitForm() {
-      //for input type number if you use v-model it auto gets the value in the type, 
+      //for input type number if you use v-model it auto gets the value in the type,
       // but for ref it gets the string type
       console.log('user age');
       console.log(this.userAge);
       console.log(31);
       console.log(this.$refs.ageInput.value);
 
-      console.log('referrer: '+ this.referrer);
-      console.log('interest: '+ this.interest);
-      console.log('how: '+ this.how);
+      console.log('referrer: ' + this.referrer);
+      console.log('interest: ' + this.interest);
+      console.log('how: ' + this.how);
       // single check box without value give true or false
-      console.log('confirm: '+ this.confirm);
+      console.log('confirm: ' + this.confirm);
+    },
+    validateInput() {
+      if (this.userName === '') {
+        this.userNameValidity = 'invalid';
+      } else {
+        this.userNameValidity = 'valid';
+      }
     },
   },
 };
@@ -99,6 +161,13 @@ form {
 .form-control {
   margin: 0.5rem 0;
 }
+.form-control.invalid input{
+  border-color: red;
+}
+.form-control.invalid label{
+  color: red;
+}
+
 
 label {
   font-weight: bold;
