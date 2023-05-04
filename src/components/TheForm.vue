@@ -46,6 +46,10 @@
         <label for="how-other">Other</label>
       </div>
     </div>
+    <div class="form-control">
+      <input type="checkbox" id="confirm-terms" name="confirm-terms" v-model="confirm">
+      <label for="confirm-terms" >Agree to terms</label>
+    </div>
     <div>
       <button>Save Data</button>
     </div>
@@ -60,6 +64,7 @@ export default {
       referrer: '',// drop down need a def
       interest: [],//need to default array
       how: null,
+      confirm: false,
     };
   },
   methods: {
@@ -74,6 +79,8 @@ export default {
       console.log('referrer: '+ this.referrer);
       console.log('interest: '+ this.interest);
       console.log('how: '+ this.how);
+      // single check box without value give true or false
+      console.log('confirm: '+ this.confirm);
     },
   },
 };
